@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Shape Detection API - Detecting Text</title>
+</head>
+<body>
+  <button id="detect" onclick="detect()">Detect the text</button>
+  <img hidden id="image" src="https://upload.wikimedia.org/wikipedia/commons/8/8e/FontDisplays.JPG">
+  <div id="result"></div>
+  <script>
+  // Check for browser support
+  if (window.TextDetector) {
+
+    // HTML elements
+    let image = document.getElementById('image');
+    let result = document.getElementById('result');
+
+    // Invoke the API
+    let textDetector = new TextDetector();
+
+    textDetector.detect(theImage)
+    .then(detectedTextBlocks => {
+      // Loop through the results
+      for (const textBlock of detectedTextBlocks) {
+
+        console.log(textBlock.rawValue);
+        result.innerHtml += `<li>${textBlock.rawValue}</li>`;
+      }
+    }).catch(() => {
+      console.error("Text Detection failed, boo.");
+    });
+  } else {
+    console.error('Text Detection not supported on this platform');
+  }
+  </script>
+</body>
+</html>
