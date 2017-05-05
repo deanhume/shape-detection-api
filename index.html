@@ -7,32 +7,34 @@
 </head>
 <body>
   <button id="detect" onclick="detect()">Detect the text</button>
-  <img hidden id="image" src="https://upload.wikimedia.org/wikipedia/commons/8/8e/FontDisplays.JPG">
+  <img id="image" crossorigin="anonymous" src="https://upload.wikimedia.org/wikipedia/commons/8/8e/FontDisplays.JPG">
   <div id="result"></div>
   <script>
-  // Check for browser support
-  if (window.TextDetector) {
+  function detect(){
+    // Check for browser support
+    if (window.TextDetector) {
 
-    // HTML elements
-    let image = document.getElementById('image');
-    let result = document.getElementById('result');
+      // HTML elements
+      let image = document.getElementById('image');
+      let result = document.getElementById('result');
 
-    // Invoke the API
-    let textDetector = new TextDetector();
+      // Invoke the API
+      let textDetector = new TextDetector();
 
-    textDetector.detect(theImage)
-    .then(detectedTextBlocks => {
-      // Loop through the results
-      for (const textBlock of detectedTextBlocks) {
+      textDetector.detect(image)
+      .then(detectedTextBlocks => {
+        // Loop through the results
+        for (const textBlock of detectedTextBlocks) {
 
-        console.log(textBlock.rawValue);
-        result.innerHtml += `<li>${textBlock.rawValue}</li>`;
-      }
-    }).catch(() => {
-      console.error("Text Detection failed, boo.");
-    });
-  } else {
-    console.error('Text Detection not supported on this platform');
+          console.log(textBlock.rawValue);
+          result.innerHtml += `<li>${textBlock.rawValue}</li>`;
+        }
+      }).catch((err) => {
+        console.error("Text Detection failed, boo.", err);
+      });
+    } else {
+      console.error('Text Detection not supported on this platform');
+    }
   }
   </script>
 </body>
